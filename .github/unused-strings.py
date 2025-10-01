@@ -114,8 +114,10 @@ def read_language_file(filename, strings_found, errors):
             strings_defined.append(name)
 
             if name.startswith('CM_'):
-                name = name[3:]            
-                
+                name_no_prefix = name[3:]
+            else:
+                name_no_prefix = name
+
             if skip == SkipType.EXTERNAL:
                 strings_found.add(name)
                 skip = SkipType.LENGTH
@@ -123,7 +125,7 @@ def read_language_file(filename, strings_found, errors):
             if skip == SkipType.LENGTH:
                 skip = SkipType.NONE
                 length -= 1
-                common_prefix = name
+                common_prefix = name_no_prefix
             elif skip == SkipType.ZERO_IS_SPECIAL:
                 strings_found.add(name)
             elif length > 0:
@@ -132,7 +134,7 @@ def read_language_file(filename, strings_found, errors):
 
                 # Find the common prefix of these strings
                 for i in range(len(common_prefix)):
-                    if common_prefix[0 : i + 1] != name[0 : i + 1]:
+                    if common_prefix[0 : i + 1] != name_no_prefix[0 : i + 1]:
                         common_prefix = common_prefix[0:i]
                         break
 
@@ -142,7 +144,7 @@ def read_language_file(filename, strings_found, errors):
                     if len(common_prefix) < 6:
                         errors.append(f"ERROR: common prefix of block including {name} was reduced to {common_prefix}. This means the names in the list are not consistent.")
             elif common_prefix:
-                if name.startswith(common_prefix):
+                if name_no_prefix.startswith(common_prefix):
                     errors.append(f"ERROR: {name} looks a lot like block above with prefix {common_prefix}. This mostly means that the list length was too short. Use '###next-name-looks-similar' if it is not.")
                 common_prefix = ""
 

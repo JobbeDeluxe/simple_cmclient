@@ -592,13 +592,13 @@ void ObjectHighlight::UpdateTiles() {
             ).test();
             auto palette = (this->cost.Succeeded() ? CM_PALETTE_TINT_WHITE : CM_PALETTE_TINT_RED_DEEP);
 
-            const auto layout_numtracks = std::min<uint16_t>(numtracks, UINT8_MAX);
-            const auto layout_platform_length = std::min<uint16_t>(plat_len, UINT8_MAX);
-            RailStationTileLayout stl{
-                nullptr,
-                static_cast<uint8_t>(layout_numtracks),
-                static_cast<uint8_t>(layout_platform_length)
-            };  // TODO statspec
+		const auto layout_numtracks = std::min<uint16_t>(numtracks, UINT8_MAX);
+		const auto layout_platform_length = std::min<uint16_t>(plat_len, UINT8_MAX);
+		RailStationTileLayout stl{
+			nullptr,
+			static_cast<uint8_t>(layout_numtracks),
+			static_cast<uint8_t>(layout_platform_length)
+		};  // TODO statspec
             auto it = stl.begin();
 
             auto tile_delta = (this->axis == AXIS_X ? TileDiffXY(1, 0) : TileDiffXY(0, 1));
@@ -1498,16 +1498,16 @@ void DrawBridgeHead(SpriteID palette, const TileInfo *ti, RailType railtype, Dia
     if (ti->tileh == SLOPE_FLAT) base_offset += 4; // sloped bridge head
     psid = &GetBridgeSpriteTable(type, BRIDGE_PIECE_HEAD)[base_offset];
 
-    const SpriteBounds bridge_bounds{
-        Coord3D<int8_t>{},
-        Coord3D<uint8_t>{
-            static_cast<uint8_t>(16),
-            static_cast<uint8_t>(16),
-            static_cast<uint8_t>(ti->tileh == SLOPE_FLAT ? 0 : 8)
-        },
-        Coord3D<int8_t>{}
-    };
-    AddSortableSpriteToDraw(psid->sprite, palette, ti->x, ti->y, ti->z, bridge_bounds);
+	const SpriteBounds bridge_bounds{
+		Coord3D<int8_t>{},
+		Coord3D<uint8_t>{
+			static_cast<uint8_t>(16),
+			static_cast<uint8_t>(16),
+			static_cast<uint8_t>(ti->tileh == SLOPE_FLAT ? 0 : 8)
+		},
+		Coord3D<int8_t>{}
+	};
+	AddSortableSpriteToDraw(psid->sprite, palette, ti->x, ti->y, ti->z, bridge_bounds);
     // DrawAutorailSelection(ti, (ddir == DIAGDIR_SW || ddir == DIAGDIR_NE ? HT_DIR_X : HT_DIR_Y), PAL_NONE);
 }
 

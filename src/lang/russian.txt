@@ -6650,7 +6650,7 @@ CM_STR_CARGO_WITH_ID                                            :{STRING} {SILVE
 CM_STR_INDUSTRY_TYPE_WITH_ID                                    :{STRING} {SILVER}#{NUM}
 CM_STR_CONFIG_SETTING_TYPE_DROPDOWN_CITYMANIA                   :Настройки патч-пака CityMania
 
-CM_BUILDING_PREVIEW_COST_ENOUGH                                 :Стоимость
+CM_STR_BUILDING_PREVIEW_COST_ENOUGH                                 :Стоимость
 
 CM_STR_NO_BLUEPRINT_IN_SLOT                                     :{WHITE}Нет чертежа в слоте {NUM}
 CM_STR_ABOUT_MENU_LOGIN_WINDOW                                  :Аутентификация на сервере CityMania
