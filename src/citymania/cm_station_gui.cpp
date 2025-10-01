@@ -147,7 +147,7 @@ void MarkCoverageHighlightDirty() {
     MarkCatchmentTilesDirty();
 }
 
-void OnStationTileSetChange(const Station *station, bool /* adding */, StationType /* type */) {
+void OnStationTileSetChange(const Station * /*station*/, bool /*adding*/, StationType /*type*/) {
     // TODO
     // if (station == _highlight_station_to_join) {
     //     // if (_highlight_join_area.tile != INVALID_TILE)
@@ -158,7 +158,7 @@ void OnStationTileSetChange(const Station *station, bool /* adding */, StationTy
     // if (station == _viewport_highlight_station) MarkCoverageAreaDirty(_viewport_highlight_station);
 }
 
-void OnStationDeleted(const Station *station) {
+void OnStationDeleted(const Station * /*station*/) {
     // TODO
     // if (_highlight_station_to_join == station) {
     //     MarkCoverageAreaDirty(station);
@@ -167,7 +167,7 @@ void OnStationDeleted(const Station *station) {
 }
 
 // const Station *_last_built_station;
-void OnStationPartBuilt(const Station *station) {
+void OnStationPartBuilt(const Station * /*station*/) {
     // _last_built_station = station;
     // CheckRedrawStationCoverage();
 }
@@ -1074,7 +1074,7 @@ ToolGUIInfo StationSelectAction<Handler>::GetGUIInfo() {
 }
 
 template <ImplementsStationSelectHandler Handler>
-void StationSelectAction<Handler>::OnStationRemoved(const Station *station) {
+void StationSelectAction<Handler>::OnStationRemoved(const Station * /*station*/) {
     // if (this->selected_station == station->index) this->selected_station = INVALID_STATION;
 }
 
@@ -1391,12 +1391,12 @@ CursorID RoadStopBuildTool::GetCursor() {
 // --- DockBuildTool Handler Implementations ---
 
 // RemoveHandler
-up<Command> DockBuildTool::RemoveHandler::GetCommand(TileArea area) {
+up<Command> DockBuildTool::RemoveHandler::GetCommand(TileArea /*area*/) {
     // TODO: Implement dock removal command if available
     return nullptr;
 }
 
-bool DockBuildTool::RemoveHandler::Execute(TileArea area) {
+bool DockBuildTool::RemoveHandler::Execute(TileArea /*area*/) {
     // TODO: Implement dock removal execution if available
     return false;
 }
@@ -1474,12 +1474,12 @@ CursorID DockBuildTool::GetCursor() {
 // --- AirportBuildTool Handler Implementations ---
 
 // RemoveHandler
-up<Command> AirportBuildTool::RemoveHandler::GetCommand(TileArea area) {
+up<Command> AirportBuildTool::RemoveHandler::GetCommand(TileArea /*area*/) {
     // TODO: Implement aiport removal command if available
     return nullptr;
 }
 
-bool AirportBuildTool::RemoveHandler::Execute(TileArea area) {
+bool AirportBuildTool::RemoveHandler::Execute(TileArea /*area*/) {
     // TODO: Implement airport removal execution if available
     return false;
 }
@@ -1510,7 +1510,7 @@ up<Command> AirportBuildTool::SizedPlacementHandler::GetCommand(TileIndex tile, 
 }
 
 bool AirportBuildTool::SizedPlacementHandler::Execute(TileIndex tile) {
-    this->tool.ExecuteBuildCommand(this, &CcBuildAirport, tile);
+    return this->tool.ExecuteBuildCommand(this, &CcBuildAirport, tile);
 }
 
 std::optional<ObjectHighlight> AirportBuildTool::SizedPlacementHandler::GetObjectHighlight(TileIndex tile) {

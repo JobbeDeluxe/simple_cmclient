@@ -15,6 +15,7 @@
 
 #include <fstream>
 #include <queue>
+#include <string>
 
 namespace citymania {
 
@@ -39,7 +40,8 @@ void SkipFakeCommands(TimerGameTick::TickCounter counter) {
     }
 
     if (commands_skipped) {
-        fprintf(stderr, "Skipped %u commands that predate the current counter (%lu)\n", commands_skipped, counter);
+        fprintf(stderr, "Skipped %u commands that predate the current counter (%llu)\n", commands_skipped,
+            static_cast<unsigned long long>(counter));
     }
 }
 
@@ -55,7 +57,9 @@ void ExecuteFakeCommands(TimerGameTick::TickCounter counter) {
     while (!_fake_commands.empty() && _fake_commands.front().counter <= counter) {
         auto &x = _fake_commands.front();
 
-        fprintf(stderr, "Executing command: %s(%u) company=%u ... ", GetCommandName(x.cp.cmd), x.cp.cmd, x.cp.company);
+        const std::string command_name{GetCommandName(x.cp.cmd)};
+        fprintf(stderr, "Executing command: %s(%u) company=%u ... ", command_name.c_str(), x.cp.cmd,
+            static_cast<unsigned int>(x.cp.company));
         if (x.res == 0) {
             fprintf(stderr, "REJECTED\n");
             _fake_commands.pop();
