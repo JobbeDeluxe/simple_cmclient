@@ -35,6 +35,11 @@ Both 'stable' and 'nightly' versions are available for download:
 - most people should choose the 'stable' version, as this has been more extensively tested
 - the 'nightly' version includes the latest changes and features, but may sometimes be less reliable
 
+### 1.1.1) CityMania-Windows-Builds erzeugen
+
+Aktuelle CityMania-Builds für Windows werden über unseren GitHub-Actions-Workflow erzeugt oder können lokal auf einem Windows-System kompiliert werden.
+Eine ausführliche Schritt-für-Schritt-Anleitung, wie Sie den automatischen Build starten oder selbst eine `citymania-client-<version>-windows-*.zip` (inklusive `openttd.exe`) erstellen, finden Sie unter [docs/windows_release.md](./docs/windows_release.md).
+
 OpenTTD is also available for free on [Steam](https://store.steampowered.com/app/1536610/OpenTTD/), [GOG.com](https://www.gog.com/game/openttd), and the [Microsoft Store](https://www.microsoft.com/p/openttd-official/9ncjg5rvrr1c). On some platforms OpenTTD will be available via your OS package manager or a similar service.
 
 ## 1.2) OpenTTD gameplay manual
