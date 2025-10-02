@@ -40,8 +40,8 @@ void SkipFakeCommands(TimerGameTick::TickCounter counter) {
     }
 
     if (commands_skipped) {
-        fprintf(stderr, "Skipped %u commands that predate the current counter (%llu)\n", commands_skipped,
-            static_cast<unsigned long long>(counter));
+		fprintf(stderr, "Skipped %u commands that predate the current counter (%llu)\n", commands_skipped,
+			static_cast<unsigned long long>(counter));
     }
 }
 

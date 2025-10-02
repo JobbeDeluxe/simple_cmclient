@@ -555,7 +555,7 @@ void AfterLoadFindBTProCBInfo() {
 			if (s.empty() || s[0] == ';' || s[0] == '#' || s[0] == ' ' || s[0] == '\0') continue;
 			// FIXME use StringConsumer?
 			// if (MatchesLegacyCbCargoString(s)) {
-			// 	bool with_decay = MatchesLegacyCbCargoStringWithDecay(s);
+			//      bool with_decay = MatchesLegacyCbCargoStringWithDecay(s);
 			// 	auto str_prefix = encoded_prefix + fmt::format("{:X}:", string_id);
 			// 	auto pn = str_prefix.size();
 			// 	for (StoryPageElement *se : StoryPageElement::Iterate()) {

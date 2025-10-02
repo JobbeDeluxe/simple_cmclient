@@ -307,15 +307,15 @@ struct CommandsToolbarWindow : Window {
 				break;
 			case CTW_TOWN_ID:
 				this->query_widget = CTQ_TOWN_ID;
-                            ShowQueryString(STR_EMPTY, CM_STR_TOOLBAR_COMMANDS_TOWN_QUERY, 8, this, CS_NUMERAL, QSF_NONE);
+							ShowQueryString(STR_EMPTY, CM_STR_TOOLBAR_COMMANDS_TOWN_QUERY, 8, this, CS_NUMERAL, QSF_NONE);
 				break;
 			case CTW_LOGIN:
 				this->query_widget = CTQ_LOGIN_NAME;
-                            ShowQueryString(STR_EMPTY, CM_STR_TOOLBAR_COMMANDS_LOGIN_NAME_QUERY, 24, this, CS_ALPHANUMERAL, QSF_NONE);
+							ShowQueryString(STR_EMPTY, CM_STR_TOOLBAR_COMMANDS_LOGIN_NAME_QUERY, 24, this, CS_ALPHANUMERAL, QSF_NONE);
 				break;
 			case CTW_NAME:
 				this->query_widget = CTQ_NAME_NEWNAME;
-                            ShowQueryString(STR_EMPTY, CM_STR_TOOLBAR_COMMANDS_NAME_NEWNAME_QUERY, 25, this, CS_ALPHANUMERAL, QSF_NONE);
+							ShowQueryString(STR_EMPTY, CM_STR_TOOLBAR_COMMANDS_NAME_NEWNAME_QUERY, 25, this, CS_ALPHANUMERAL, QSF_NONE);
 				break;
 			case CTW_TOPIC1:
 			case CTW_TOPIC2:
