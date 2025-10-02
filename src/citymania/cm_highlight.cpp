@@ -820,31 +820,33 @@ void ObjectHighlight::MarkDirty() {
 
 
 template <typename F>
-uint8 Get(uint32 x, uint32 y, F getter) {
-    if (x >= Map::SizeX() || y >= Map::SizeY()) return 0;
+uint8 Get(uint32 x, uint32 y, F getter)
+{
+	if (x >= Map::SizeX() || y >= Map::SizeY()) return 0;
 	return static_cast<uint8>(getter(TileXY(x, y)));
 }
 
 template <typename F>
-std::pair<ZoningBorder, uint8> CalcTileBorders(TileIndex tile, F getter) {
-    auto x = TileX(tile), y = TileY(tile);
-    ZoningBorder res = ZoningBorder::NONE;
+std::pair<ZoningBorder, uint8> CalcTileBorders(TileIndex tile, F getter)
+{
+	const uint32 x = TileX(tile);
+	const uint32 y = TileY(tile);
+	ZoningBorder res = ZoningBorder::NONE;
 	const uint8 z = static_cast<uint8>(getter(tile));
-    if (z == 0)
-        return std::make_pair(res, 0);
+	if (z == 0) return std::make_pair(res, 0);
 	const uint8 tr = Get(x - 1, y, getter);
 	const uint8 tl = Get(x, y - 1, getter);
 	const uint8 bl = Get(x + 1, y, getter);
 	const uint8 br = Get(x, y + 1, getter);
-    if (tr < z) res |= ZoningBorder::TOP_RIGHT;
-    if (tl < z) res |= ZoningBorder::TOP_LEFT;
-    if (bl < z) res |= ZoningBorder::BOTTOM_LEFT;
-    if (br < z) res |= ZoningBorder::BOTTOM_RIGHT;
-    if (tr == z && tl == z && Get(x - 1, y - 1, getter) < z) res |= ZoningBorder::TOP_CORNER;
-    if (tr == z && br == z && Get(x - 1, y + 1, getter) < z) res |= ZoningBorder::RIGHT_CORNER;
-    if (br == z && bl == z && Get(x + 1, y + 1, getter) < z) res |= ZoningBorder::BOTTOM_CORNER;
-    if (tl == z && bl == z && Get(x + 1, y - 1, getter) < z) res |= ZoningBorder::LEFT_CORNER;
-    return std::make_pair(res, z);
+	if (tr < z) res |= ZoningBorder::TOP_RIGHT;
+	if (tl < z) res |= ZoningBorder::TOP_LEFT;
+	if (bl < z) res |= ZoningBorder::BOTTOM_LEFT;
+	if (br < z) res |= ZoningBorder::BOTTOM_RIGHT;
+	if (tr == z && tl == z && Get(x - 1, y - 1, getter) < z) res |= ZoningBorder::TOP_CORNER;
+	if (tr == z && br == z && Get(x - 1, y + 1, getter) < z) res |= ZoningBorder::RIGHT_CORNER;
+	if (br == z && bl == z && Get(x + 1, y + 1, getter) < z) res |= ZoningBorder::BOTTOM_CORNER;
+	if (tl == z && bl == z && Get(x + 1, y - 1, getter) < z) res |= ZoningBorder::LEFT_CORNER;
+	return std::make_pair(res, z);
 }
 
 const HighlightMap::MapType &HighlightMap::GetMap() const {
