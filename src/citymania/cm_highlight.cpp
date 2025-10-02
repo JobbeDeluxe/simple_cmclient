@@ -1052,7 +1052,16 @@ void DrawTrainStationSprite(SpriteID palette, const TileInfo *ti, RailType railt
 }
 
 void AddSortableStationSprite(SpriteID sprite, SpriteID palette, const TileInfo *ti) {
-    AddSortableSpriteToDraw(sprite, palette, *ti, {{}, {1, 1, BB_HEIGHT_UNDER_BRIDGE}, {}});
+    const SpriteBounds highlight_bounds{
+            Coord3D<int8_t>{},
+            Coord3D<uint8_t>{
+                    static_cast<uint8_t>(1),
+                    static_cast<uint8_t>(1),
+                    static_cast<uint8_t>(BB_HEIGHT_UNDER_BRIDGE)
+            },
+            Coord3D<int8_t>{}
+    };
+    AddSortableSpriteToDraw(sprite, palette, *ti, highlight_bounds);
 }
 
 void DrawRoadStop(SpriteID palette, const TileInfo *ti, RoadType roadtype, DiagDirection orientation, bool is_truck) {
@@ -1536,7 +1545,16 @@ void DrawTunnelHead(SpriteID palette, const TileInfo *ti, RailType railtype, Dia
     }
 
     image += ddir * 2;
-    AddSortableSpriteToDraw(image, palette, ti->x, ti->y, ti->z, {{}, {16, 16, 0}, {}});
+    const SpriteBounds tunnel_bounds{
+            Coord3D<int8_t>{},
+            Coord3D<uint8_t>{
+                    static_cast<uint8_t>(16),
+                    static_cast<uint8_t>(16),
+                    static_cast<uint8_t>(0)
+            },
+            Coord3D<int8_t>{}
+    };
+    AddSortableSpriteToDraw(image, palette, ti->x, ti->y, ti->z, tunnel_bounds);
 }
 
 void DrawSelectionPoint(SpriteID palette, const TileInfo *ti) {
