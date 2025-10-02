@@ -255,7 +255,11 @@ std::multimap<TileIndex, ObjectTileHighlight> Blueprint::GetTiles(TileIndex tile
                 add_tile(otile, ObjectTileHighlight::make_rail_depot(palette, o.u.rail.depot.ddir));
                 break;
             case Item::Type::RAIL_STATION_PART: {
-                RailStationTileLayout stl{nullptr, o.u.rail.station_part.numtracks, o.u.rail.station_part.plat_len};  // TODO statspec
+                RailStationTileLayout stl(
+                        nullptr,
+                        static_cast<uint8_t>(o.u.rail.station_part.numtracks),
+                        static_cast<uint8_t>(o.u.rail.station_part.plat_len)
+                );  // TODO statspec
                 auto it = stl.begin();
 
                 if (palette == CM_PALETTE_TINT_WHITE && can_build_station_sign.find(o.u.rail.station_part.id) == can_build_station_sign.end())
