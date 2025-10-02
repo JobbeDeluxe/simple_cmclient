@@ -180,7 +180,7 @@ void FindStationsAroundSelection()
  * If it is needed actually make the window for redrawing.
  * @param w the window to check.
  */
-void CheckRedrawStationCoverage(Window *w)
+void CheckRedrawStationCoverage([[maybe_unused]] Window *w)
 {
 	/* Test if ctrl state changed */
 	/* CityMania uses tools and handles redraws differently
@@ -1466,7 +1466,6 @@ struct StationViewWindow : public Window {
 		this->SetWidgetDisabledState(WID_SV_CLOSE_AIRPORT, !st->facilities.Test(StationFacility::Airport) || st->owner != _local_company || st->owner == OWNER_NONE); // Also consider SE, where _local_company == OWNER_NONE
 		this->SetWidgetLoweredState(WID_SV_CLOSE_AIRPORT, st->facilities.Test(StationFacility::Airport) && st->airport.blocks.Test(AirportBlock::AirportClosed));
 
-		extern const Station *_viewport_highlight_station;
 		this->SetWidgetDisabledState(WID_SV_CATCHMENT, st->facilities.None());
 		this->SetWidgetLoweredState(WID_SV_CATCHMENT, citymania::IsHighlightCoverageStation(st));
 

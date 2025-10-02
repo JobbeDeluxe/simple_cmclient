@@ -20,6 +20,7 @@
 //#include "../table/town_land.h"  // _town_draw_tile_data
 #include "../timer/timer_game_tick.h"
 #include "../viewport_sprite_sorter.h"
+#include "../core/math_func.hpp"
 #include "../viewport_type.h"
 #include "../window_func.h"
 #include "../window_gui.h"
@@ -456,10 +457,14 @@ void ExportSprite(SpriteID sprite, SpriteType type) {
     if (exported.find(sprite) != exported.end()) return;
     auto fname = fmt::format("snaps/sprite_{}.bin", sprite);
     std::ofstream f(fname, std::ios::binary);
-    uint size;
-    void *raw = GetRawSprite(sprite, type);
-    if (type == SpriteType::Recolour) size = 257;
-    else size = *(((size_t *)raw) - 1);
+	uint size;
+	void *raw = GetRawSprite(sprite, type);
+	if (type == SpriteType::Recolour) {
+		size = 257;
+	} else {
+		const auto raw_size = *(((size_t *)raw) - 1);
+		size = ClampTo<uint>(raw_size);
+	}
     f.write((char *)raw, size);
     exported.insert(sprite);
 }

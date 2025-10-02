@@ -6,6 +6,7 @@
 #include "../debug.h"
 #include "../network/network.h"
 #include "../network/network_client.h"
+#include "../core/math_func.hpp"
 
 #include <queue>
 #include <vector>
@@ -183,11 +184,12 @@ void InitCommandQueue() {
 }
 
 bool CanSendCommand() {
-    return _commands_this_frame < 2;
+	return _commands_this_frame < 2;
 }
 
 uint GetCurrentQueueDelay() {
-    return _outgoing_queue.size() / 2;
+	const size_t queue_size = _outgoing_queue.size();
+	return ClampTo<uint>(queue_size / 2);
 }
 
 void FlushCommandQueue() {

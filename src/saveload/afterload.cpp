@@ -550,7 +550,7 @@ void AfterLoadFindBTProCBInfo() {
 	StringBuilder builder(encoded_prefix);
 	builder.PutUtf8(SCC_ENCODED);
 	for (const auto &ls : _current_gamestrings_data->raw_strings) {
-		int string_id = 0;
+		[[maybe_unused]] int string_id = 0;
 		for (const auto &s : ls.lines) {
 			if (s.empty() || s[0] == ';' || s[0] == '#' || s[0] == ' ' || s[0] == '\0') continue;
 			// FIXME use StringConsumer?

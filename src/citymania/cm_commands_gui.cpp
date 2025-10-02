@@ -21,6 +21,7 @@
 #include "../window_func.h"
 #include "../window_gui.h"
 #include "../querystring_gui.h" // QueryString definition
+#include "../core/math_func.hpp"
 
 #include <sstream>
 
@@ -619,31 +620,27 @@ private:
 };
 
 std::string urlencode(const std::string &s) {
-    static const char lookup[]= "0123456789abcdef";
-    std::stringstream e;
-    for(int i=0, ix=s.length(); i<ix; i++)
-    {
-        const char& c = s[i];
-        if ( (48 <= c && c <= 57) ||//0-9
-             (65 <= c && c <= 90) ||//abc...xyz
-             (97 <= c && c <= 122) || //ABC...XYZ
-             (c=='-' || c=='_' || c=='.' || c=='~')
-        )
-        {
-            e << c;
-        }
-        else
-        {
-            e << '%';
-            e << lookup[ (c&0xF0)>>4 ];
-            e << lookup[ (c&0x0F) ];
-        }
-    }
-    return e.str();
+	static const char lookup[]= "0123456789abcdef";
+	std::stringstream e;
+	const size_t length = s.length();
+	for (size_t i = 0; i < length; ++i) {
+		const unsigned char c = static_cast<unsigned char>(s[i]);
+		if ((c >= '0' && c <= '9') ||
+				(c >= 'A' && c <= 'Z') ||
+				(c >= 'a' && c <= 'z') ||
+				c == '-' || c == '_' || c == '.' || c == '~') {
+			e << c;
+		} else {
+			e << '%';
+			e << lookup[(c & 0xF0) >> 4];
+			e << lookup[c & 0x0F];
+		}
+	}
+	return e.str();
 }
 
 std::string btpro_encode(const char *value) {
-	return urlencode(base64_encode((const unsigned char *)value, strlen(value)));
+	return urlencode(base64_encode((const unsigned char *)value, ClampTo<unsigned int>(strlen(value))));
 }
 
 //send login

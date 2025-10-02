@@ -475,7 +475,7 @@ void VideoDriver_Cocoa::InputLoop()
 {
 	NSUInteger cur_mods = [ NSEvent modifierFlags ];
 
-	bool old_ctrl_pressed = _ctrl_pressed;
+	[[maybe_unused]] const bool old_ctrl_pressed = _ctrl_pressed;
 
 	// _ctrl_pressed = (cur_mods & ( _settings_client.gui.right_mouse_btn_emulation != RMBE_CONTROL ? NSEventModifierFlagControl : NSEventModifierFlagCommand)) != 0;
 	bool command_pressed = (cur_mods & NSEventModifierFlagCommand) != 0;
