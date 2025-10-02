@@ -592,15 +592,13 @@ void ObjectHighlight::UpdateTiles() {
             ).test();
             auto palette = (this->cost.Succeeded() ? CM_PALETTE_TINT_WHITE : CM_PALETTE_TINT_RED_DEEP);
 
-            const auto layout_numtracks = std::min<uint16_t>(numtracks, UINT8_MAX);
-            const auto layout_platform_length = std::min<uint16_t>(plat_len, UINT8_MAX);
-            const auto layout_numtracks8 = static_cast<uint8_t>(layout_numtracks);
-            const auto layout_platform_length8 = static_cast<uint8_t>(layout_platform_length);
-            RailStationTileLayout stl{
+            const auto layout_numtracks8 = static_cast<uint8_t>(std::min<uint16_t>(numtracks, UINT8_MAX));
+            const auto layout_platform_length8 = static_cast<uint8_t>(std::min<uint16_t>(plat_len, UINT8_MAX));
+            RailStationTileLayout stl(
                     nullptr,
                     layout_numtracks8,
                     layout_platform_length8
-            };  // TODO statspec
+            );  // TODO statspec
             auto it = stl.begin();
 
             auto tile_delta = (this->axis == AXIS_X ? TileDiffXY(1, 0) : TileDiffXY(0, 1));
@@ -766,7 +764,7 @@ void ObjectHighlight::UpdateTiles() {
                         ObjectTileHighlight::make_industry_tile(
                             CM_PALETTE_TINT_WHITE,
                             this->ind_type,
-							static_cast<uint8>(cost.cm.industry_layout),
+                             static_cast<uint8_t>(cost.cm.industry_layout),
                             tile_diff,
                             it.gfx
                         )
