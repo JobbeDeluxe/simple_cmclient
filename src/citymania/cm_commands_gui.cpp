@@ -839,7 +839,7 @@ static const NWidgetPart _nested_login_window_widgets[] = {
 };
 
 static WindowDesc _login_window_desc(
-	WDP_CENTER, {}, 0, 0,
+	WDP_CENTER, "citymania_login_window", 0, 0,
 	CM_WC_LOGIN_WINDOW, WC_NONE,
 	WindowDefaultFlag::Construction,
 	_nested_login_window_widgets
