@@ -484,7 +484,7 @@ protected:
 
 		/* Draw the grid lines. */
 		int gridline_width = WidgetDimensions::scaled.bevel.top;
-		PixelColour grid_colour = GRAPH_GRID_COLOUR;
+		[[maybe_unused]] const PixelColour grid_colour = GRAPH_GRID_COLOUR;
 
 		// CityMania doesn't draw for less clutter
 		/* Don't draw the first line, as that's where the axis will be. */

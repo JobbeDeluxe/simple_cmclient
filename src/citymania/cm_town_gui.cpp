@@ -338,7 +338,7 @@ public:
 								// if (this->town->delivered_enough[cargos->Index()]) {
 									string_to_draw = (this->town->cm.cb.delivered_last_month[cargos->Index()] >= requirements) ? CM_STR_TOWN_CB_CARGO_PREVIOUS_YES : CM_STR_TOWN_CB_CARGO_PREVIOUS_EDGE;
 								// }
-								// else string_to_draw = STR_TOWN_CB_CARGO_PREVIOUS_BAD;
+								// else string_to_draw = CM_STR_TOWN_CB_CARGO_PREVIOUS_BAD;
 							}
 							else string_to_draw = CM_STR_TOWN_CB_CARGO_PREVIOUS_NOT;
 

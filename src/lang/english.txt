@@ -6398,7 +6398,7 @@ CM_STR_CARGO_WITH_ID                                            :{STRING} {SILVE
 CM_STR_INDUSTRY_TYPE_WITH_ID                                    :{STRING} {SILVER}#{NUM}
 CM_STR_CONFIG_SETTING_TYPE_DROPDOWN_CITYMANIA                   :CityMania patchpack settings
 
-CM_BUILDING_PREVIEW_COST_ENOUGH                                 :Cost
+CM_STR_BUILDING_PREVIEW_COST_ENOUGH                                 :Cost
 
 CM_STR_NO_BLUEPRINT_IN_SLOT                                     :{WHITE}No blueprint in slot {NUM}
 CM_STR_ABOUT_MENU_LOGIN_WINDOW                                  :CityMania server login

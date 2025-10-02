@@ -13,6 +13,7 @@
 #include "../cargotype.h"
 #include "../zoom_func.h"
 #include "../dropdown_type.h"
+#include "../core/math_func.hpp"
 
 #include "../widgets/cargo_table_widget.h"
 
@@ -86,8 +87,11 @@ struct CargosWindow : Window {
 			case WID_CT_AMOUNT:
 			case WID_CT_INCOME:
 			case WID_CT_LIST:
-				size.height = _sorted_standard_cargo_specs.size() * line_height + CT_LINESPACE + GetCharacterHeight(FS_NORMAL);
+			{
+				const uint cargo_rows = ClampTo<uint>(_sorted_standard_cargo_specs.size());
+				size.height = cargo_rows * line_height + CT_LINESPACE + GetCharacterHeight(FS_NORMAL);
 				break;
+			}
 		}
 		size.width += padding.width;
 		size.height += padding.height;

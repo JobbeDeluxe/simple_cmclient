@@ -26,7 +26,7 @@ enum StationCoverageType : uint8_t {
 
 int DrawStationCoverageAreaText(const Rect &r, StationCoverageType sct, int rad, bool supplies);
 int DrawStationAuthorityText(int left, int right, int top); // TODO change to Rect
-void CheckRedrawStationCoverage(/* CM const */ Window *w);
+void CheckRedrawStationCoverage(/* CM const */ [[maybe_unused]] Window *w);
 void CheckRedrawRailWaypointCoverage(const Window *w);
 void CheckRedrawRoadWaypointCoverage(const Window *w);
 

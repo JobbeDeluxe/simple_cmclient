@@ -461,7 +461,7 @@ void VideoDriver_Allegro::Stop()
 
 void VideoDriver_Allegro::InputLoop()
 {
-	bool old_ctrl_pressed = _ctrl_pressed;
+	[[maybe_unused]] const bool old_ctrl_pressed = _ctrl_pressed;
 
 	_ctrl_pressed  = !!(key_shifts & KB_CTRL_FLAG);
 	_alt_pressed = !!(key_shifts & KB_ALT_FLAG);

@@ -2,6 +2,7 @@
 
 #include "cm_bitstream.hpp"
 
+#include "../core/math_func.hpp"
 #include "../safeguards.h"
 
 namespace citymania {
@@ -51,7 +52,8 @@ const u8vector &BitOStream::GetVector()
  */
 uint BitOStream::GetByteSize() const
 {
-	return f.size() + (c ? 1 : 0);
+	const size_t byte_count = f.size() + (c ? size_t{1} : size_t{0});
+	return ClampTo<uint>(byte_count);
 }
 
 BitIStreamUnexpectedEnd _bit_i_stream_unexpected_end;

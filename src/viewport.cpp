@@ -3320,8 +3320,8 @@ static void CheckOverflow(int &test, int &other, int max, int mult)
 	test = max;
 }
 
-static const uint X_DIRS = (1 << DIR_NE) | (1 << DIR_SW);
-static const uint Y_DIRS = (1 << DIR_SE) | (1 << DIR_NW);
+[[maybe_unused]] static const uint X_DIRS = (1 << DIR_NE) | (1 << DIR_SW);
+[[maybe_unused]] static const uint Y_DIRS = (1 << DIR_SE) | (1 << DIR_NW);
 static const uint HORZ_DIRS = (1 << DIR_W) | (1 << DIR_E);
 // static const uint VERT_DIRS = (1 << DIR_N) | (1 << DIR_S);
 
@@ -3762,10 +3762,12 @@ static HighLightStyle CalcPolyrailDrawstyle(Point pt, bool dragging)
 	if (_current_snap_lock.x != -1) {
 		snap_point = FindBestPolyline(pt, &_current_snap_lock, 1, &line);
 	} else if (snap_mode == RSM_SNAP_TO_TILE) {
-		snap_point = FindBestPolyline(pt, _tile_snap_points.data(), _tile_snap_points.size(), &line);
+		const uint tile_snap_count = ClampTo<uint>(_tile_snap_points.size());
+		snap_point = FindBestPolyline(pt, _tile_snap_points.data(), tile_snap_count, &line);
 	} else {
 		assert(snap_mode == RSM_SNAP_TO_RAIL);
-		snap_point = FindBestPolyline(pt, _rail_snap_points.data(), _rail_snap_points.size(), &line);
+		const uint rail_snap_count = ClampTo<uint>(_rail_snap_points.size());
+		snap_point = FindBestPolyline(pt, _rail_snap_points.data(), rail_snap_count, &line);
 	}
 
 	if (snap_point == NULL) return HT_NONE; // no match

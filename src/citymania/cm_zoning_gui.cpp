@@ -14,7 +14,7 @@
 namespace citymania {
 
 const StringID _zone_types[] = {
-	//STR_ZONING_NO_ZONING,
+	// (unused no-zoning caption),
 	CM_STR_ZONING_AUTHORITY,
 	CM_STR_ZONING_CAN_BUILD,
 	CM_STR_ZONING_STA_CATCH,

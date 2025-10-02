@@ -14,6 +14,7 @@
 #include "../tunnelbridge_map.h"
 #include "../core/endian_func.hpp"
 #include "../core/geometry_func.hpp"
+#include "../core/math_func.hpp"
 #include "../widgets/smallmap_widget.h"
 #include "../core/kdtree.hpp"
 #include "../vehicle_base.h"
@@ -250,7 +251,8 @@ bool is_cached_industry(const Industry *ind) {
 MinimapIndustryKdtreeEntry get_industry_entry(const Industry *ind) {
 	auto x = TileX(ind->location.tile) * TILE_SIZE + ind->location.w * TILE_SIZE / 2;
 	auto y = TileY(ind->location.tile) * TILE_SIZE + ind->location.h * TILE_SIZE / 2;
-	_max_industry_outputs = std::max<uint>(_max_industry_outputs, ind->produced.size());
+	const uint produced_count = ClampTo<uint>(ind->produced.size());
+	_max_industry_outputs = std::max(_max_industry_outputs, produced_count);
 	return {(int16)((y - x) / 8), (int16)((y + x) / 8), ind->index};
 }
 
@@ -1182,7 +1184,7 @@ void SmallMapWindow::SetupWidgetData()
 	StringID legend_tooltip;
 	StringID enable_all_tooltip;
 	StringID disable_all_tooltip;
-	int industry_names_select_plane;
+	[[maybe_unused]] int industry_names_select_plane = 0;
 	int select_buttons_plane;
 	switch (this->map_type) {
 		case SMT_INDUSTRY:

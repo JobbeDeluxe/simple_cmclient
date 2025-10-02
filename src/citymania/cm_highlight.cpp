@@ -1,5 +1,9 @@
 #include "../stdafx.h"
 
+#include <algorithm>
+#include <cstdint>
+#include <limits>
+
 #include "cm_highlight.hpp"
 
 #include "cm_blueprint.hpp"
@@ -588,7 +592,13 @@ void ObjectHighlight::UpdateTiles() {
             ).test();
             auto palette = (this->cost.Succeeded() ? CM_PALETTE_TINT_WHITE : CM_PALETTE_TINT_RED_DEEP);
 
-            RailStationTileLayout stl{nullptr, numtracks, plat_len};  // TODO statspec
+		const auto layout_numtracks = std::min<uint16_t>(numtracks, UINT8_MAX);
+		const auto layout_platform_length = std::min<uint16_t>(plat_len, UINT8_MAX);
+		RailStationTileLayout stl{
+			nullptr,
+			static_cast<uint8_t>(layout_numtracks),
+			static_cast<uint8_t>(layout_platform_length)
+		};  // TODO statspec
             auto it = stl.begin();
 
             auto tile_delta = (this->axis == AXIS_X ? TileDiffXY(1, 0) : TileDiffXY(0, 1));
@@ -754,7 +764,7 @@ void ObjectHighlight::UpdateTiles() {
                         ObjectTileHighlight::make_industry_tile(
                             CM_PALETTE_TINT_WHITE,
                             this->ind_type,
-                            cost.cm.industry_layout,
+							static_cast<uint8>(cost.cm.industry_layout),
                             tile_diff,
                             it.gfx
                         )
@@ -810,31 +820,33 @@ void ObjectHighlight::MarkDirty() {
 
 
 template <typename F>
-uint8 Get(uint32 x, uint32 y, F getter) {
-    if (x >= Map::SizeX() || y >= Map::SizeY()) return 0;
-    return getter(TileXY(x, y));
+uint8 Get(uint32 x, uint32 y, F getter)
+{
+	if (x >= Map::SizeX() || y >= Map::SizeY()) return 0;
+	return static_cast<uint8>(getter(TileXY(x, y)));
 }
 
 template <typename F>
-std::pair<ZoningBorder, uint8> CalcTileBorders(TileIndex tile, F getter) {
-    auto x = TileX(tile), y = TileY(tile);
-    ZoningBorder res = ZoningBorder::NONE;
-    auto z = getter(tile);
-    if (z == 0)
-        return std::make_pair(res, 0);
-    auto tr = Get(x - 1, y, getter);
-    auto tl = Get(x, y - 1, getter);
-    auto bl = Get(x + 1, y, getter);
-    auto br = Get(x, y + 1, getter);
-    if (tr < z) res |= ZoningBorder::TOP_RIGHT;
-    if (tl < z) res |= ZoningBorder::TOP_LEFT;
-    if (bl < z) res |= ZoningBorder::BOTTOM_LEFT;
-    if (br < z) res |= ZoningBorder::BOTTOM_RIGHT;
-    if (tr == z && tl == z && Get(x - 1, y - 1, getter) < z) res |= ZoningBorder::TOP_CORNER;
-    if (tr == z && br == z && Get(x - 1, y + 1, getter) < z) res |= ZoningBorder::RIGHT_CORNER;
-    if (br == z && bl == z && Get(x + 1, y + 1, getter) < z) res |= ZoningBorder::BOTTOM_CORNER;
-    if (tl == z && bl == z && Get(x + 1, y - 1, getter) < z) res |= ZoningBorder::LEFT_CORNER;
-    return std::make_pair(res, z);
+std::pair<ZoningBorder, uint8> CalcTileBorders(TileIndex tile, F getter)
+{
+	const uint32 x = TileX(tile);
+	const uint32 y = TileY(tile);
+	ZoningBorder res = ZoningBorder::NONE;
+	const uint8 z = static_cast<uint8>(getter(tile));
+	if (z == 0) return std::make_pair(res, 0);
+	const uint8 tr = Get(x - 1, y, getter);
+	const uint8 tl = Get(x, y - 1, getter);
+	const uint8 bl = Get(x + 1, y, getter);
+	const uint8 br = Get(x, y + 1, getter);
+	if (tr < z) res |= ZoningBorder::TOP_RIGHT;
+	if (tl < z) res |= ZoningBorder::TOP_LEFT;
+	if (bl < z) res |= ZoningBorder::BOTTOM_LEFT;
+	if (br < z) res |= ZoningBorder::BOTTOM_RIGHT;
+	if (tr == z && tl == z && Get(x - 1, y - 1, getter) < z) res |= ZoningBorder::TOP_CORNER;
+	if (tr == z && br == z && Get(x - 1, y + 1, getter) < z) res |= ZoningBorder::RIGHT_CORNER;
+	if (br == z && bl == z && Get(x + 1, y + 1, getter) < z) res |= ZoningBorder::BOTTOM_CORNER;
+	if (tl == z && bl == z && Get(x + 1, y - 1, getter) < z) res |= ZoningBorder::LEFT_CORNER;
+	return std::make_pair(res, z);
 }
 
 const HighlightMap::MapType &HighlightMap::GetMap() const {
@@ -1488,7 +1500,16 @@ void DrawBridgeHead(SpriteID palette, const TileInfo *ti, RailType railtype, Dia
     if (ti->tileh == SLOPE_FLAT) base_offset += 4; // sloped bridge head
     psid = &GetBridgeSpriteTable(type, BRIDGE_PIECE_HEAD)[base_offset];
 
-    AddSortableSpriteToDraw(psid->sprite, palette, ti->x, ti->y, ti->z, {{}, {16, 16, ti->tileh == SLOPE_FLAT ? 0 : 8}, {}});
+	const SpriteBounds bridge_bounds{
+		Coord3D<int8_t>{},
+		Coord3D<uint8_t>{
+			static_cast<uint8_t>(16),
+			static_cast<uint8_t>(16),
+			static_cast<uint8_t>(ti->tileh == SLOPE_FLAT ? 0 : 8)
+		},
+		Coord3D<int8_t>{}
+	};
+	AddSortableSpriteToDraw(psid->sprite, palette, ti->x, ti->y, ti->z, bridge_bounds);
     // DrawAutorailSelection(ti, (ddir == DIAGDIR_SW || ddir == DIAGDIR_NE ? HT_DIR_X : HT_DIR_Y), PAL_NONE);
 }
 

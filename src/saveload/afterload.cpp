@@ -550,14 +550,12 @@ void AfterLoadFindBTProCBInfo() {
 	StringBuilder builder(encoded_prefix);
 	builder.PutUtf8(SCC_ENCODED);
 	for (const auto &ls : _current_gamestrings_data->raw_strings) {
-		int string_id = 0;
+		[[maybe_unused]] int string_id = 0;
 		for (const auto &s : ls.lines) {
 			if (s.empty() || s[0] == ';' || s[0] == '#' || s[0] == ' ' || s[0] == '\0') continue;
 			// FIXME use StringConsumer?
-			// if (strncmp(s.c_str(), "STR_TOWN_CLAIMED_CARGOS", strlen("STR_TOWN_CLAIMED_CARGOS")) == 0 ||
-			// 		strncmp(s.c_str(), "STR_TOWN_CARGOS_NEEDED_CB", strlen("STR_TOWN_CARGOS_NEEDED_CB")) == 0) {
-			// 	bool with_decay = (strncmp(s.c_str(), "STR_TOWN_CLAIMED_CARGOS_DECAY",
-			// 		strlen("STR_TOWN_CLAIMED_CARGOS_DECAY")) == 0);
+			// if (MatchesLegacyCbCargoString(s)) {
+			//      bool with_decay = MatchesLegacyCbCargoStringWithDecay(s);
 			// 	auto str_prefix = encoded_prefix + fmt::format("{:X}:", string_id);
 			// 	auto pn = str_prefix.size();
 			// 	for (StoryPageElement *se : StoryPageElement::Iterate()) {
